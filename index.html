@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Madam Ji ❤️</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+text-align:center;
+background:#111;
+color:white;
+}
+
+.page{
+display:none;
+padding:50px;
+}
+
+.active{
+display:block;
+}
+
+button{
+padding:12px 25px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:#ff4d6d;
+color:white;
+cursor:pointer;
+margin-top:20px;
+}
+
+.gallery img{
+width:220px;
+margin:10px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
+
+.candle{
+width:10px;
+height:40px;
+background:yellow;
+display:inline-block;
+margin:5px;
+position:relative;
+}
+
+.flame{
+width:10px;
+height:10px;
+background:orange;
+border-radius:50%;
+position:absolute;
+top:-10px;
+animation:flicker 0.2s infinite alternate;
+}
+
+@keyframes flicker{
+from{opacity:1;}
+to{opacity:0.5;}
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+<h1>Happy Birthday Madam Ji ❤️</h1>
+<p>A small surprise from your bacchu</p>
+<button onclick="next(2)">Start Surprise</button>
+</div>
+
+<!-- PAGE 2 LETTER -->
+<div class="page" id="page2">
+<h2>Open Your Letter ✉️</h2>
+
+<p>
+Avika,<br><br>
+Aaj ka din mere liye duniya ka sabse special din hai.<br>
+Kyuki aaj meri Madam ji ka birthday hai.<br><br>
+
+Tum meri life ka sabse beautiful part ho.<br>
+Aur tumhari smile mere liye sabse precious cheez hai ❤️
+</p>
+
+<button onclick="next(3)">Next Surprise</button>
+</div>
+
+<!-- PAGE 3 GALLERY -->
+<div class="page" id="page3">
+<h2>Beautiful Memories 📸</h2>
+
+<div class="gallery">
+
+<img src="images/avika1.jpg">
+<img src="images/avika2.jpg">
+<img src="images/avika3.jpg">
+<img src="images/avika4.jpg">
+
+</div>
+
+<button onclick="next(4)">Next</button>
+</div>
+
+<!-- PAGE 4 CAKE -->
+<div class="page" id="page4">
+
+<h2>Make a Wish Madam Ji 🎂</h2>
+
+<div id="candles">
+
+<div class="candle"><div class="flame"></div></div>
+<div class="candle"><div class="flame"></div></div>
+<div class="candle"><div class="flame"></div></div>
+<div class="candle"><div class="flame"></div></div>
+
+</div>
+
+<br>
+
+<button onclick="blow()">Blow Candles</button>
+
+<br>
+
+<button onclick="next(5)">Cut the Cake</button>
+
+</div>
+
+<!-- PAGE 5 CELEBRATION -->
+<div class="page" id="page5">
+
+<h1>Happy Birthday Avika ❤️</h1>
+
+<p>
+
+Avika,<br><br>
+
+Jab tum meri life me aayi tab mujhe samajh aya ki kisi ka hona kitna special hota hai.<br><br>
+
+Tum sirf meri girlfriend nahi ho, tum meri motivation ho.<br><br>
+
+Main bas ye chahta hoon ki tum hamesha khush raho aur life me sab kuch achieve karo.<br><br>
+
+</p>
+
+<h2>
+Madam ji ke liye ek chota sa gift  
+unke bacchu ke taraf se 🎁
+</h2>
+
+<canvas id="fireworks"></canvas>
+
+</div>
+
+<script>
+
+function next(page){
+
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("active");
+})
+
+document.getElementById("page"+page).classList.add("active")
+
+if(page==5){
+startFireworks()
+}
+
+}
+
+function blow(){
+
+document.querySelectorAll(".flame").forEach(f=>{
+f.style.display="none"
+})
+
+alert("Candles blown! Now cut the cake 🎂")
+
+}
+
+function startFireworks(){
+
+const canvas=document.getElementById("fireworks")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let particles=[]
+
+function createFirework(){
+
+for(let i=0;i<100;i++){
+
+particles.push({
+x:canvas.width/2,
+y:canvas.height/2,
+vx:(Math.random()-0.5)*6,
+vy:(Math.random()-0.5)*6,
+life:100
+})
+
+}
+
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+particles.forEach(p=>{
+
+p.x+=p.vx
+p.y+=p.vy
+p.life--
+
+ctx.fillStyle="white"
+ctx.fillRect(p.x,p.y,3,3)
+
+})
+
+particles=particles.filter(p=>p.life>0)
+
+requestAnimationFrame(animate)
+
+}
+
+createFirework()
+animate()
+
+}
+
+</script>
+
+</body>
+  </html>
